@@ -237,7 +237,7 @@ while True:
                 bricks.remove(brick)
                 score += 10
                 brick_break_sound.play()
-                if random.random() < 0.9:
+                if random.random() < 0.3:
                     power_up_type = random.choice(['grow', 'laser', 'glue', 'slow',  'points', 'speedup_ball', 'speedup_paddle'])
                     power_up = PowerUp(brick.rect.centerx, brick.rect.centery, power_up_type)
                     power_ups.append(power_up)
