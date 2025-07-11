@@ -222,7 +222,7 @@ class PowerUp:
         'glue': {'color': (60, 255, 60), 'char': 'C', 'message': 'CATCH PADDLE'},
         'slow': {'color': (255, 165, 0), 'char': 'S', 'message': 'SLOW BALL'},
 
-        'points': {'color': (165, 60, 60), 'char': 'E', 'message': 'EXTRA POINTS'},
+        'points': {'color': (165, 60, 60), 'char': 'B', 'message': 'BONUS SCORE'},
         'speedup_ball': {'color': (165, 60, 0), 'char': 'F', 'message': 'FAST BALL'},
         'speedup_paddle': {'color': (165, 60, 0), 'char': 'A', 'message': 'FAST PADDLE'}
     }
