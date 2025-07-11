@@ -195,6 +195,23 @@ while True:
                 for sound in all_sounds:
                     sound.set_volume(0.0 if is_muted else 1.0)
 
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                if game_state not in ['playing', 'title_screen', 'game_over']:
+                    if game_state == 'you_win':
+                        current_level += 1
+                        if current_level > 5:
+                            current_level = 1
+                    paddle.reset()
+                    ball.reset()
+                    bricks = create_brick_level(current_level)
+                    score = 0
+                    lives = 3
+                    power_ups.clear()
+                    lasers.clear()
+                    particles.clear()
+                    fireworks.clear()
+                    game_state = 'playing'
+
     # --- Drawing and Updating based on Game State ---
     screen.fill(BG_COLOR)
 
@@ -275,9 +292,6 @@ while True:
         
         if not bricks:
             game_state = 'you_win'
-            current_level += 1
-            if current_level > 5:
-                current_level = 1
 
         # --- Draw all game objects ---
         paddle.draw(screen)
@@ -314,12 +328,16 @@ while True:
         text_surface = game_font.render(message, True, (255, 255, 255))
         text_rect = text_surface.get_rect(center=(screen_width / 2, screen_height / 2 - 20))
         screen.blit(text_surface, text_rect)
-        
+
+        new_level_surface = game_font.render("Press ENTER to restart" if game_state == 'game_over' else "Press ENTER to continue", True, (255, 255, 255))
+        new_level_rect = new_level_surface.get_rect(center=(screen_width / 2, screen_height / 2 + 30))
+        screen.blit(new_level_surface, new_level_rect)
+
         # !!! PHASE: TITLE SCREEN !!!
         # The restart message is now consistent
         restart_surface = game_font.render("Press SPACE to return to Title", True, (255, 255, 255))
         # !!! END PHASE: TITLE SCREEN !!!
-        restart_rect = restart_surface.get_rect(center=(screen_width / 2, screen_height / 2 + 30))
+        restart_rect = restart_surface.get_rect(center=(screen_width / 2, screen_height / 2 + 80))
         screen.blit(restart_surface, restart_rect)
 
     # --- Update effects and messages (these run in all states) ---
@@ -337,9 +355,10 @@ while True:
         particle.draw(screen)
     # !!! END PHASE: TITLE SCREEN !!!
 
-    mute_surface = buttons_font.render("Mute/Unmute (M)", True, (255, 255, 255))
-    mute_rect = mute_surface.get_rect(bottomright=(screen_width - 10, screen_height - 10))
-    screen.blit(mute_surface, mute_rect)
+    if game_state == 'playing':
+        mute_surface = buttons_font.render("Mute/Unmute (M)", True, (255, 255, 255))
+        mute_rect = mute_surface.get_rect(bottomright=(screen_width - 10, screen_height - 10))
+        screen.blit(mute_surface, mute_rect)
 
     # --- Final Display Update ---
     pygame.display.flip()
