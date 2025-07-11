@@ -196,7 +196,7 @@ while True:
                     sound.set_volume(0.0 if is_muted else 1.0)
 
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                if game_state not in ['playing', 'title_screen', 'game_over']:
+                if game_state not in ['playing', 'title_screen']:
                     if game_state == 'you_win':
                         current_level += 1
                         if current_level > 5:
